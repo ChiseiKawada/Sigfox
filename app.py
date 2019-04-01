@@ -4,7 +4,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-urls = []
+jsons = []
 times = []
 
 @app.route("/", methods=["GET", "POST"])
@@ -23,13 +23,12 @@ def route():
 @app.route("/test", methods=["GET", "POST"])
 def test():
     if request.method == "POST":
-        urls.append(request.host_url)
+
         times.append(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
+        jsons.append(request.json)
         print("postだよ")
 
-    return render_template('test.html', content=urls, times=times) #変更
-
-
+    return render_template('test.html', content=jsons, times=times) #変更
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8888, threaded=True)
